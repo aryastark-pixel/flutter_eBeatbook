@@ -1,5 +1,35 @@
 //all the widgets of loginpage
+//page 1 widget1
+import 'package:e_beatbook/view/pages/beatLoggedin.dart';
 import 'package:flutter/material.dart';
+class CustomAppbar extends StatelessWidget implements
+    PreferredSizeWidget {
+  const CustomAppbar({super.key});
+  @override
+  Size get preferredSize => Size.fromHeight(60.0);
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(20),
+
+            )
+        ),
+        title: Center(child: Text('e-beatbook',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        )),
+        primary: true,
+        backgroundColor: Color(0xFF2282C3),
+        iconTheme: IconThemeData(color: Colors.white)
+
+    );
+  }
+}
+
 class LoginWidget extends StatelessWidget {
   const LoginWidget({super.key});
 
@@ -47,9 +77,14 @@ class LoginWidget extends StatelessWidget {
     );
   }
 }
-class FormFields extends StatelessWidget {
+class FormFields extends StatefulWidget {
   const FormFields({super.key});
 
+  @override
+  State<FormFields> createState() => _FormFieldsState();
+}
+
+class _FormFieldsState extends State<FormFields> {
   @override
   Widget build(BuildContext context) {
     final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
@@ -108,14 +143,15 @@ class Captcha extends StatelessWidget {
   }
 }
 
-
 class LoginButton extends StatelessWidget {
   const LoginButton({super.key});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        onPressed: (){},
+        onPressed: (){
+          Navigator.push(context, MaterialPageRoute(builder: (context) =>BeatLoggedIn(),),);
+        },
         child: Text('Login'));
   }
 }

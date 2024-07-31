@@ -1,4 +1,5 @@
 //Loginpage aka homepage
+//page1
 
 import 'package:e_beatbook/view/widgets/loginwidgets.dart';
 import 'package:flutter/material.dart';
@@ -13,24 +14,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.vertical(
-                bottom: Radius.circular(20),
-
-              )
-          ),
-          title: Center(child: Text('e-beatbook',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-              ),
-            )),
-          primary: true,
-          backgroundColor: Color(0xFF2282C3),
-          iconTheme: IconThemeData(color: Colors.white)
-
-      ),
+      appBar: CustomAppbar(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
