@@ -1,6 +1,6 @@
 {
-    "name": "e_beatbook",
-    "short_name": "e_beatbook",
+    "name": "gps_tracking",
+    "short_name": "gps_tracking",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

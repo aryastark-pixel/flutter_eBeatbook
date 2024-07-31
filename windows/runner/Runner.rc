@@ -90,12 +90,12 @@ BEGIN
         BLOCK "040904e4"
         BEGIN
             VALUE "CompanyName", "com.example" "\0"
-            VALUE "FileDescription", "e_beatbook" "\0"
+            VALUE "FileDescription", "gps_tracking" "\0"
             VALUE "FileVersion", VERSION_AS_STRING "\0"
-            VALUE "InternalName", "e_beatbook" "\0"
+            VALUE "InternalName", "gps_tracking" "\0"
             VALUE "LegalCopyright", "Copyright (C) 2024 com.example. All rights reserved." "\0"
-            VALUE "OriginalFilename", "e_beatbook.exe" "\0"
-            VALUE "ProductName", "e_beatbook" "\0"
+            VALUE "OriginalFilename", "gps_tracking.exe" "\0"
+            VALUE "ProductName", "gps_tracking" "\0"
             VALUE "ProductVersion", VERSION_AS_STRING "\0"
         END
     END

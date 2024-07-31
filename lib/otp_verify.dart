@@ -1,25 +1,42 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'screens/footer_widget.dart';
-import 'otp_verify.dart';
+import 'beatbook.dart';
 import 'location_provider.dart';
 
-void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  LocationService().startLocationService();
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
+class OtpVerify extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: HomePage(),
-    );
-  }
+  _OtpVerifyState createState() => _OtpVerifyState();
 }
 
-class HomePage extends StatelessWidget {
+class _OtpVerifyState extends State<OtpVerify> {
+  String _otp = '';
+
+  @override
+  void initState() {
+    super.initState();
+    LocationService().startLocationService(); // Start location service
+  }
+
+  @override
+  void dispose() {
+    LocationService().stopLocationService(); // Stop location service
+    super.dispose();
+  }
+
+  void _verifyOtp() {
+    if (_otp == '123456') {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => BeatbookEntry()),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Invalid OTP')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,14 +44,13 @@ class HomePage extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
         child: AppBar(
-          title: Center(
-            child: Text(
-              'eBeatBook',
-              style: GoogleFonts.lato(fontSize: 28, fontWeight: FontWeight.bold),
-            ),
-          ),
+          automaticallyImplyLeading: true, // This will show the back button
+          centerTitle: true, // Ensures that the title is centered
+          title: Text(
+            'eBeatBook',
+            style: GoogleFonts.lato(fontSize: 28, fontWeight: FontWeight.bold),
+          ), // Your title text widget
           backgroundColor: Color(0xFFFF7F3E),
-          centerTitle: true,
         ),
       ),
       body: Container(
@@ -42,14 +58,15 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            SizedBox(height: 0),
+// Adjusted padding to manage space between AppBar and logo
+            SizedBox(height: 0), // Adjust height as needed
             Image.asset(
-              'assets/logo.png',
+              'assets/logo.png', // Ensure this image is in your assets folder
               height: 350,
             ),
             SizedBox(height: 20),
             Text(
-              'Beat Login',
+              'Verification',
               style: GoogleFonts.lato(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             SizedBox(height: 30),
@@ -57,7 +74,7 @@ class HomePage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: TextField(
                 decoration: InputDecoration(
-                  hintText: 'Enter Phone Number',
+                  hintText: 'Enter OTP',
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(10),
                   ),
@@ -70,7 +87,7 @@ class HomePage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => OtpVerify()),
+                  MaterialPageRoute(builder: (context) => BeatbookEntry()),
                 );
               },
               style: ElevatedButton.styleFrom(
@@ -81,7 +98,7 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               child: Text(
-                'GET OTP',
+                'VERIFY',
                 style: GoogleFonts.lato(fontSize: 18, color: Colors.white),
               ),
             ),
