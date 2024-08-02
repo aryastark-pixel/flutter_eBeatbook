@@ -1,5 +1,8 @@
 //page2 widget 2
+//yet to implement crud here
+import 'package:e_beatbook/services/apiservice/apicalls.dart';
 import 'package:flutter/material.dart';
+
 class HotelsForms extends StatefulWidget {
   const HotelsForms({super.key});
 
@@ -9,6 +12,22 @@ class HotelsForms extends StatefulWidget {
 
 class _HotelsFormsState extends State<HotelsForms> {
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  late String HotelName;
+  late String HotelOwner;
+  late String phonenumber;
+  late String Remarks;
+
+  TextEditingController hotelcontroller = TextEditingController();
+  TextEditingController ownercontroller = TextEditingController();
+  TextEditingController numbercontroller = TextEditingController();
+  TextEditingController remarkscontroller = TextEditingController();
+  Map<String, dynamic> _dataToSend = {
+    'HotelName': '',
+    'HotelOwner': '',
+    'phonenumber': '',
+    'Remarks': '',
+  };
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -19,7 +38,7 @@ class _HotelsFormsState extends State<HotelsForms> {
           child: Column(
             children: [
               TextFormField(
-                //   controller: nameController,
+               controller: hotelcontroller,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                   labelText: 'Hotel Name',
@@ -35,7 +54,8 @@ class _HotelsFormsState extends State<HotelsForms> {
 
                 onChanged: (String value){
                   print(value);
-                  //_dataToSend['name'] = value;
+                  _dataToSend['HotelName'] = value;
+                  print(_dataToSend['HotelName']);
 
 
                 },
@@ -52,7 +72,7 @@ class _HotelsFormsState extends State<HotelsForms> {
               ),
               SizedBox(height: 23),
               TextFormField(
-                //controller: postController,
+                controller: ownercontroller,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                   labelText: 'Owner Name',
@@ -67,7 +87,7 @@ class _HotelsFormsState extends State<HotelsForms> {
                     borderRadius: BorderRadius.circular(10.0),),),
                 onChanged: (String value){
                   print(value);
-                 // _dataToSend['post'] = value;
+                  _dataToSend['HotelOwner'] = value;
                 },
 
                 validator:(value){
@@ -77,7 +97,7 @@ class _HotelsFormsState extends State<HotelsForms> {
                   return null;},),
               SizedBox(height: 23),
               TextFormField(
-               // controller: phonenumberController,
+                controller: numbercontroller,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                   labelText: 'Phonenumber',
@@ -97,7 +117,7 @@ class _HotelsFormsState extends State<HotelsForms> {
                 ),
                 onChanged: (String value){
                   print(value);
-                 // _dataToSend['phonenumber'] = value;
+                  _dataToSend['phonenumber'] = value;
 
                 },
                 validator: (value) {
@@ -113,7 +133,7 @@ class _HotelsFormsState extends State<HotelsForms> {
               ),
               SizedBox(height: 30,),
               TextFormField(
-                //   controller: nameController,
+                controller: remarkscontroller,
                 keyboardType: TextInputType.text,
                 decoration: InputDecoration(
                   labelText: 'Your Remarks',
@@ -129,9 +149,7 @@ class _HotelsFormsState extends State<HotelsForms> {
 
                 onChanged: (String value){
                   print(value);
-                  //_dataToSend['name'] = value;
-
-
+                  _dataToSend['Remarks'] = value;
                 },
 
                 validator:(value){
@@ -153,9 +171,9 @@ class _HotelsFormsState extends State<HotelsForms> {
                       barrierDismissible: false,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text('Edit Confirmation'),
+                          title: Text('Add Confirmation'),
                           content: Text(
-                              'Are you sure you want to Edit this item?'),
+                              'Are you sure you want to Add this item?'),
                           actions: [
                             TextButton(
                               onPressed: () {
@@ -165,14 +183,14 @@ class _HotelsFormsState extends State<HotelsForms> {
                             ),
                             TextButton(
                               onPressed: () async {
-                                // print(_dataToSend);
-                                // submitupdatedData(widget.id);
-                                // phonenumberController.clear();
-                                // postController.clear();
-                                // nameController.clear();
+                                await posthotelData(_dataToSend);
+                                ownercontroller.clear();
+                                numbercontroller.clear();
+                                remarkscontroller.clear();
+                                hotelcontroller.clear();
                                 Navigator.of(context).pop();
                               },
-                              child: Text('Edit'),
+                              child: Text('Add'),
                             ),
                           ],
                         );
@@ -182,6 +200,7 @@ class _HotelsFormsState extends State<HotelsForms> {
 
                 },
                 style: ElevatedButton.styleFrom(
+                  primary: Colors.blueGrey,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                   ),
@@ -190,6 +209,7 @@ class _HotelsFormsState extends State<HotelsForms> {
                 ),
                 child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+
                   child: Text(
                     'ADD',
                     style: TextStyle(
